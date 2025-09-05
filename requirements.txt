@@ -1,0 +1,66 @@
+# Environment & Config
+python-dotenv
+pydantic-settings
+
+# FastAPI & Web
+fastapi
+uvicorn[standard]   
+python-multipart
+starlette
+typing-extensions
+annotated-types
+typing-inspection
+idna
+click
+
+# Database
+sqlalchemy
+greenlet
+psycopg2-binary
+pymilvus
+milvus-lite
+
+# Security / Auth
+bcrypt
+python-jose
+ecdsa
+pyasn1
+rsa
+
+# HTTP / Requests
+requests
+httplib2
+uritemplate
+
+# Google APIs / Generative AI
+google
+google-api-python-client
+google-api-core
+google-auth-httplib2
+googleapis-common-protos
+google-generativeai
+google-genai
+google-ai-generativelanguage
+
+# Data / Analysis
+numpy
+pandas
+python-dateutil
+pytz
+tzdata
+ujson
+tqdm
+pyparsing
+six
+
+# NLP / Language
+langdetect
+beautifulsoup4
+soupsieve
+proto-plus
+protobuf
+grpcio
+grpcio-status
+
+# OR Tools (Google Optimization Tools)
+ortools

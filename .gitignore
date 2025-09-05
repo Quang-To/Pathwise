@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Environment variables and secrets
+.env
+skills_cache.json
+
+# SQL data
+*.sql
+
+# VS Code settings
+.vscode/
+
+# Node modules
+front_end/node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Office temp files
+~$*
+
+# Docker
+*.log
+
+data/

@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pathwise
+  labels:
+    app: pathwise
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pathwise
+  template:
+    metadata:
+      labels:
+        app: pathwise
+    spec:
+      containers:
+        - name: pathwise
+          image: 661269962226.dkr.ecr.ap-southeast-1.amazonaws.com/dev-docker-repository:pathwise-hcm-1.0.0
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: pathwise-env
+          readinessProbe:
+            httpGet:
+              path: /docs
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /docs
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pathwise
+  labels:
+    app: pathwise
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8000
+      targetPort: 8000
+  selector:
+    app: pathwise
