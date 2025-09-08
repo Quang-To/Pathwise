@@ -1,33 +1,130 @@
-# Byte-compiled / optimized / DLL files
+# ===============================
+# === Python ====================
+# ===============================
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 *.so
 *.egg
 *.egg-info/
+.eggs/
 dist/
 build/
+pip-wheel-metadata/
 
-# Environment variables and secrets
-.env
-skills_cache.json
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
 
-# SQL data
-*.sql
+# Jupyter Notebook
+.ipynb_checkpoints/
 
-# VS Code settings
-.vscode/
-
-# Node modules
-front_end/node_modules/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Office temp files
-~$*
-
-# Docker
+# Test & coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
 *.log
 
+# Type checker / Linter caches
+.mypy_cache/
+.pyre/
+.pytype/
+
+# ===============================
+# === Node.js / React ===========
+# ===============================
+front_end/node_modules/
+front_end/build/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ===============================
+# === Environment & Secrets =====
+# ===============================
+.env
+.env.*
+*.env
+*.secret
+secrets.json
+
+# Example (for sharing configs without secrets)
+!.env.example
+
+# ===============================
+# === Data & Cache ==============
+# ===============================
 data/
+*.sqlite3
+*.db
+*.sql
+*.bak
+*.tmp
+*.cache
+skills_cache.json
+
+# ===============================
+# === Docker ====================
+# ===============================
+# Container / PID files
+*.pid
+*.pid.lock
+*.seed
+
+# Ignore Docker build context cache
+.docker/
+docker-data/
+
+# Keep Dockerfile and docker-compose.yml tracked
+!Dockerfile
+!docker-compose.yml
+
+# ===============================
+# === Kubernetes / Deployment ===
+# ===============================
+*.yaml
+!deployment.yaml
+!service.yaml
+
+# ===============================
+# === IDEs & Editors ============
+# ===============================
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# ===============================
+# === OS generated files ========
+# ===============================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# ===============================
+# === Office temp files =========
+# ===============================
+~$*
+
+# ===============================
+# === Misc ======================
+# ===============================
+*.swp
+*.swo
+
+#Handover
+PathWise Handover.docx

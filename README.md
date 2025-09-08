@@ -1,11 +1,10 @@
 # Pathwise: Hệ Thống Quản Lý Lộ Trình Học Tập & Gợi Ý Khóa Học
 
-Pathwise là nền tảng quản lý học tập dành cho doanh nghiệp và tổ chức giáo dục, hỗ trợ gợi ý khóa học, xây dựng kỹ năng cần thiết, phản hồi học tập và quản trị người dùng. Ứng dụng AI cùng hạ tầng AWS Cloud (EC2, Milvus, RDS), Pathwise mang đến trải nghiệm học tập hiện đại, linh hoạt và cá nhân hóa cho từng người dùng.---
-## Kiến trúc hệ thống
+![Ảnh 1](assets/img1.png)  
+![Ảnh 2](assets/img2.png)  
+![Ảnh 3](assets/img3.png)
 
-!(assets/img1.png)  
-!(assets/img2.png)  
-!(assets/img3.png)
+Pathwise là nền tảng quản lý học tập dành cho doanh nghiệp và tổ chức giáo dục, hỗ trợ gợi ý khóa học, xây dựng kỹ năng cần thiết, phản hồi học tập và quản trị người dùng. Ứng dụng AI cùng hạ tầng AWS Cloud (EC2, Milvus, RDS), Pathwise mang đến trải nghiệm học tập hiện đại, linh hoạt và cá nhân hóa cho từng người dùng.
 
 ## Tính Năng Nổi Bật
 
@@ -44,7 +43,62 @@ Pathwise/
 ## Cấu hình trước khi khởi động
 
 ### 1. Xây dựng hệ cơ sở dữ liệu
-- Trong thư mục `\data` có các file dữ liệu, import vào **PostgreSQL trên RDS**.
+- Trong thư mục `\data` có các file dữ liệu, import vào **PostgreSQL trên RDS**.  
+- Tạo schema `access_control_db` và các bảng theo cấu trúc dưới đây:  
+
+---
+
+- **Schema:** `access_control_db`  
+- **Table:** `users`  
+
+| Cột             | Kiểu dữ liệu (gợi ý) | Ý nghĩa |
+|-----------------|----------------------|---------|
+| `user_id`       | SERIAL / UUID        | Mã định danh người dùng |
+| `username`      | VARCHAR(50) UNIQUE   | Tên đăng nhập |
+| `full_name`     | TEXT                 | Họ và tên đầy đủ |
+| `email`         | VARCHAR(100) UNIQUE  | Email người dùng |
+| `password_hash` | TEXT                 | Mật khẩu đã được băm |
+| `is_active`     | BOOLEAN              | Trạng thái hoạt động (true/false) |
+| `created_at`    | TIMESTAMP            | Thời gian tạo |
+| `updated_at`    | TIMESTAMP            | Thời gian cập nhật |
+
+---
+
+- **Schema:** `access_control_db`  
+- **Table:** `roles`  
+
+| Cột               | Kiểu dữ liệu (gợi ý) | Ý nghĩa |
+|-------------------|----------------------|---------|
+| `role_id`         | SERIAL / UUID        | Mã định danh vai trò |
+| `role_name`       | VARCHAR(50) UNIQUE   | Tên vai trò (admin, manager, employee, hr, …) |
+| `role_description`| TEXT                 | Mô tả vai trò |
+
+---
+
+- **Schema:** `access_control_db`  
+- **Table:** `user_roles`  
+
+| Cột             | Kiểu dữ liệu (gợi ý) | Ý nghĩa |
+|-----------------|----------------------|---------|
+| `user_role_id`  | SERIAL / UUID        | Mã định danh quan hệ user-role |
+| `user_id`       | INT (FK → users)     | Liên kết đến bảng `users` |
+| `role_id`       | INT (FK → roles)     | Liên kết đến bảng `roles` |
+
+---
+
+- **Schema:** `employees`  
+- **Table:** `employees`  
+
+| Cột                        | Kiểu dữ liệu (gợi ý) | Ý nghĩa |
+|-----------------------------|----------------------|---------|
+| `employee_id`               | SERIAL / UUID        | Mã định danh nhân viên |
+| `employee_name`             | TEXT                 | Họ và tên nhân viên |
+| `department_id`             | INT (FK → departments)| Mã phòng ban |
+| `hire_date`                 | DATE                 | Ngày tuyển dụng |
+| `salary`                    | NUMERIC(12,2)        | Mức lương hiện tại |
+| `current_role_and_competencies` | JSONB             | Vai trò & kỹ năng hiện tại |
+| `career_aspiration`         | TEXT / JSONB         | Nguyện vọng nghề nghiệp |
+| `skill_gaps`                | JSONB                | Khoảng cách kỹ năng cần bổ sung |
 
 ### 2. Chuẩn bị thư viện cần thiết
 ```bash
@@ -86,7 +140,7 @@ Sử dụng **Milvus** để lưu trữ embedding của khóa học (từ mô t�
 URI_COURSERA=https://api.coursera.org/api/courses.v1
 ```
 
-### 5. Chạy Toàn Bộ Hệ Thống
+### 6. Chạy Toàn Bộ Hệ Thống
 
 - Tại terminal thứ nhất, chạy lệnh sau
 ```bash
@@ -101,7 +155,7 @@ npm start
   + usernam: lethithao
   + password: 123456
 
-### 6. Truy Cập Ứng Dụng
+### 7. Truy Cập Ứng Dụng
 - **Backend API:** [http://localhost:8000/docs](http://localhost:8000/docs)
 - **Frontend:** [http://localhost:3000](http://localhost:3000)
 
