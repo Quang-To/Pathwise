@@ -1,10 +1,13 @@
 # Pathwise: Hệ Thống Quản Lý Lộ Trình Học Tập & Gợi Ý Khóa Học
 
-Pathwise là nền tảng API và giao diện quản lý học tập, gợi ý khóa học, mapping kỹ năng, phản hồi và quản trị người dùng dành cho doanh nghiệp hoặc tổ chức giáo dục. Hệ thống tích hợp AI, Milvus, PostgreSQL và ReactJS để mang lại trải nghiệm học tập cá nhân hóa, hiện đại.
+Pathwise là nền tảng quản lý học tập dành cho doanh nghiệp và tổ chức giáo dục, hỗ trợ gợi ý khóa học, xây dựng kỹ năng cần thiết, phản hồi học tập và quản trị người dùng. Ứng dụng AI cùng hạ tầng AWS Cloud (EC2, Milvus, RDS), Pathwise mang đến trải nghiệm học tập hiện đại, linh hoạt và cá nhân hóa cho từng người dùng.---
+## Kiến trúc hệ thống
 
----
+!(assets/img1.png)  
+!(assets/img2.png)  
+!(assets/img3.png)
 
-## 🚀 Tính Năng Nổi Bật
+## Tính Năng Nổi Bật
 
 - **Xác thực & Phân quyền:** Đăng nhập, xác thực JWT, phân quyền theo vai trò (employee, manager, hr, admin).
 - **Gợi ý khóa học AI:** Đề xuất khóa học phù hợp dựa trên kỹ năng còn thiếu, mục tiêu nghề nghiệp và embedding AI.
@@ -17,7 +20,7 @@ Pathwise là nền tảng API và giao diện quản lý học tập, gợi ý k
 
 ---
 
-## 🗂️ Cấu Trúc Dự Án
+## Cấu Trúc Dự Án
 
 ```
 Pathwise/
@@ -38,40 +41,92 @@ Pathwise/
 
 ---
 
-## ⚡️ Khởi Động Nhanh Với Docker Compose
+## Cấu hình trước khi khởi động
 
-### 1. Chuẩn Bị `.env`
-Tạo file `.env` ở thư mục gốc, ví dụ:
-```
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=pathwise
-SECRET_KEY=your_secret_key
-```
+### 1. Xây dựng hệ cơ sở dữ liệu
+- Trong thư mục `\data` có các file dữ liệu, import vào **PostgreSQL trên RDS**.
 
-### 2. Build & Chạy Toàn Bộ Hệ Thống
+### 2. Chuẩn bị thư viện cần thiết
 ```bash
-docker-compose up --build
+pip install -r requirements.txt
 ```
 
-### 3. Truy Cập Ứng Dụng
+### 3. Xây dựng danh sách khóa học gợi ý
+
+Trong **PostgreSQL (RDS)**, tạo **schema** và **table** để lưu trữ thông tin khóa học:  
+
+- **Schema:** `course`  
+- **Table:** `courses`  
+
+| Cột           | Kiểu dữ liệu (gợi ý) | Ý nghĩa |
+|---------------|----------------------|---------|
+| `id`          | SERIAL / UUID        | Mã định danh khóa học |
+| `name`        | TEXT                 | Tên khóa học |
+| `description` | TEXT                 | Mô tả khóa học |
+| `level`       | VARCHAR              | Trình độ yêu cầu (Beginner, Intermediate, Advanced, …) |
+| `skills`      | TEXT[] / JSONB       | Các kỹ năng khóa học cung cấp |
+| `domainTypes` | TEXT[] / JSONB       | Lĩnh vực / chuyên ngành |
+| `feedback`    | FLOAT / JSONB        | Điểm/nhận xét từ người học |
+| `uri`         | TEXT                 | Đường dẫn khóa học |
+
+---
+
+### 4. Xây dựng cơ sở lưu trữ vector database
+
+Sử dụng **Milvus** để lưu trữ embedding của khóa học (từ mô tả, kỹ năng, domain).  
+- Cho phép tìm kiếm khóa học theo **semantic similarity**.  
+- Tích hợp với PostgreSQL để mapping giữa `course_id` và vector embedding.
+
+### 5. Chuẩn bị `.env`
+
+- Sao chép file mẫu `.env.example` ở thư mục gốc, đổi tên thành `.env`.  
+- Điền đầy đủ các thông tin cấu hình, lưu ý
+```bash
+# Coursera
+URI_COURSERA=https://api.coursera.org/api/courses.v1
+```
+
+### 5. Chạy Toàn Bộ Hệ Thống
+
+- Tại terminal thứ nhất, chạy lệnh sau
+```bash
+uvicorn main:app --reload
+```
+- Tạo một terminal thứ hai, chạy lệnh sau
+```bash
+npm install
+npm start
+```
+- Đăng nhập thử với thông tin sau:
+  + usernam: lethithao
+  + password: 123456
+
+### 6. Truy Cập Ứng Dụng
 - **Backend API:** [http://localhost:8000/docs](http://localhost:8000/docs)
 - **Frontend:** [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 🛠️ Phát Triển & Debug
+## Phát Triển & Debug
 
-- **Backend:** Sửa file Python, container backend tự reload (nhờ `--reload`).
-- **Frontend:** Sửa file trong `front_end/src`, frontend tự reload.
-- **Xem log backend:** `docker logs -f pathwise-backend`
-- **Xem log frontend:** `docker logs -f pathwise-frontend`
-- **Vào bash backend:** `docker exec -it pathwise-backend bash`
-- **Vào psql:** `docker exec -it pathwise-db psql -U postgres -d pathwise`
+- **Backend:**  
+  - Sửa file Python → container backend tự reload (`--reload`).  
+  - Xem log: `docker logs -f pathwise-backend`  
+  - Vào bash: `docker exec -it pathwise-backend bash`  
+
+- **Frontend:**  
+  - Sửa file trong `front_end/src` → frontend tự reload.  
+  - Xem log: `docker logs -f pathwise-frontend`  
+
+- **Database:**  
+  - Vào psql: `docker exec -it pathwise-db psql -U postgres -d pathwise`  
+
+- **Build docker:**  
+  - `docker build . -t <tên-image>`
 
 ---
 
-## 🧩 Các Endpoint Chính
+## Các Endpoint Chính
 
 | Chức năng                | Method & Endpoint                  | Mô tả ngắn gọn                      |
 |--------------------------|------------------------------------|-------------------------------------|
@@ -85,7 +140,7 @@ docker-compose up --build
 
 ---
 
-## 🏗️ Công Nghệ Sử Dụng
+## Công Nghệ Sử Dụng
 
 - **Backend:** FastAPI, SQLAlchemy, Milvus, PostgreSQL, Pydantic, python-jose, Uvicorn
 - **Frontend:** ReactJS, Material UI (MUI)
@@ -95,7 +150,7 @@ docker-compose up --build
 
 ---
 
-## 📁 Một Số File Quan Trọng
+## Một Số File Quan Trọng
 
 - `main.py`: Khởi tạo FastAPI và khai báo router.
 - `api/recommendation.py`: Endpoint gợi ý khóa học.
@@ -109,20 +164,3 @@ docker-compose up --build
 - `core/config.py`: Quản lý cấu hình hệ thống.
 
 ---
-
-## 💡 Đóng Góp & Phát Triển
-
-- Fork, tạo branch mới và gửi pull request.
-- Đảm bảo code tuân thủ chuẩn PEP8 và có unit test nếu cần.
-- Mọi ý kiến đóng góp, pull request đều được hoan nghênh!
-
----
-
-## 📞 Liên Hệ
-
-- **Email:** your_email@example.com
-- **Zalo/Telegram:** your_contact (nếu muốn)
-
----
-
-**Pathwise - Nền tảng học tập thông minh, cá nhân hóa cho doanh nghiệp và tổ chức
