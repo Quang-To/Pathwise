@@ -28,7 +28,7 @@ Pathwise/
 ├── Dockerfile
 ├── docker-compose.yml
 ├── .env
-├── access_control/         # Xác thực, phân quyền, quản lý user/role
+├── access_control/        # Xác thực, phân quyền, quản lý user/role
 ├── api/                   # Định nghĩa các endpoint RESTful
 ├── apps/                  # Logic nghiệp vụ cho từng module
 ├── core/                  # Cấu hình hệ thống
