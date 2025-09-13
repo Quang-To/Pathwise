@@ -6,6 +6,16 @@
 
 Pathwise là nền tảng quản lý học tập dành cho doanh nghiệp và tổ chức giáo dục, hỗ trợ gợi ý khóa học, xây dựng kỹ năng cần thiết, phản hồi học tập và quản trị người dùng. Ứng dụng AI cùng hạ tầng AWS Cloud (EC2, Milvus, RDS), Pathwise mang đến trải nghiệm học tập hiện đại, linh hoạt và cá nhân hóa cho từng người dùng.
 
+## USP (Unique Selling Proposition)
+
+- **AI-driven Personalization:** Cá nhân hóa lộ trình học tập dựa trên kỹ năng còn thiếu, mục tiêu nghề nghiệp và hành vi học tập.  
+- **Integrated Skill Mapping & Gap Analysis:** Mapping kỹ năng – khóa học – lộ trình nghề nghiệp, giúp HR và người học xác định rõ khoảng cách kỹ năng.  
+- **Enterprise-ready RBAC:** Hệ thống phân quyền đa cấp (employee, manager, HR, admin) phù hợp với doanh nghiệp vừa và lớn.  
+- **Massive Learning Database:** Tích hợp hơn **10,000+ khóa học Coursera** và **125,000+ vector embedding kỹ năng**, đảm bảo bao phủ toàn diện kỹ năng cần học.  
+- ☁**Scalable Cloud Infrastructure:** Kết hợp **PostgreSQL + Milvus** trên **AWS Cloud** cho hiệu năng cao, dễ mở rộng.  
+
+---
+
 ## Tính Năng Nổi Bật
 
 - **Xác thực & Phân quyền:** Đăng nhập, xác thực JWT, phân quyền theo vai trò (employee, manager, hr, admin).
@@ -201,7 +211,6 @@ npm start
 - **Vector DB:** Milvus
 - **Database:** PostgreSQL
 - **AI:** Google Generative AI (embedding, mapping kỹ năng)
-
 ---
 
 ## Một Số File Quan Trọng
