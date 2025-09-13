@@ -12,7 +12,7 @@ Pathwise là nền tảng quản lý học tập dành cho doanh nghiệp và t�
 - **Integrated Skill Mapping & Gap Analysis:** Mapping kỹ năng – khóa học – lộ trình nghề nghiệp, giúp HR và người học xác định rõ khoảng cách kỹ năng.  
 - **Enterprise-ready RBAC:** Hệ thống phân quyền đa cấp (employee, manager, HR, admin) phù hợp với doanh nghiệp vừa và lớn.  
 - **Massive Learning Database:** Tích hợp hơn **10,000+ khóa học Coursera** và **125,000+ vector embedding kỹ năng**, đảm bảo bao phủ toàn diện kỹ năng cần học.  
-- ☁**Scalable Cloud Infrastructure:** Kết hợp **PostgreSQL + Milvus** trên **AWS Cloud** cho hiệu năng cao, dễ mở rộng.  
+- **Scalable Cloud Infrastructure:** Kết hợp **PostgreSQL + Milvus** trên **AWS Cloud** cho hiệu năng cao, dễ mở rộng.  
 
 ---
 
